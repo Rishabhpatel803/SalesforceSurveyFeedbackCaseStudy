@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Tour_Package__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <label>Tour Package</label>
+    <referenceTo>Tour_Package__c</referenceTo>
+    <relationshipLabel>Travel Bookings</relationshipLabel>
+    <relationshipName>Travel_Bookings</relationshipName>
+    <required>true</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>
