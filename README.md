@@ -1,58 +1,408 @@
-# Salesforce DX Project
+# Salesforce Surveys & Customer Feedback Management System
 
-Salesforce DX is a development approach that brings source-driven development, team collaboration, and continuous integration to the Salesforce Platform. Instead of working directly in an org through a web browser, you work with metadata as source files in a local DX project, track changes in version control, and deploy through automated processes.
+> End-to-End Salesforce Solution for Automated Customer Feedback Collection, CSAT & NPS Measurement, Case Escalation, and Analytics.
 
-This project template gets you started with the tools and structure you need to build Salesforce applications using source control, scratch orgs, and the Salesforce CLI.
+![Salesforce](https://img.shields.io/badge/Salesforce-Sales%20Cloud-blue)
+![Platform](https://img.shields.io/badge/Platform-Salesforce%20Surveys-green)
+![Automation](https://img.shields.io/badge/Automation-Flows%20%26%20Apex-orange)
+![Status](https://img.shields.io/badge/Status-Implementation%20Ready-success)
 
-## Prerequisites
+---
 
-Before you start, make sure you have:
+# Overview
 
-- **Salesforce CLI** - Download from [developer.salesforce.com/tools/salesforcecli](https://developer.salesforce.com/tools/salesforcecli). See [Install Salesforce CLI](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_install_cli.htm) for details.
-- **VS Code with Salesforce Extension Pack** - See [Installation Instructions](https://developer.salesforce.com/docs/platform/sfvscode-extensions/guide/install.html) for details. Includes the Agentforce Vibes extension.
-- **A development org** - Sign up for a free Developer Edition org [here](https://developer.salesforce.com/signup).
-- **Dev Hub enabled** (optional, required to create scratch orgs) - You can enable Dev Hub in your development org under Setup > Dev Hub.  See [Provide Developers Access to Salesforce DX Tools](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_setup_dx_tools.htm).
+The **Salesforce Surveys & Customer Feedback Management System** automates the complete customer feedback lifecycle for **ExploreConnect Travels**.
 
-## Project Structure
+Whenever a customer completes a travel booking, Salesforce automatically:
 
-Your DX project follows this structure:
+- Sends a Survey Invitation
+- Collects customer feedback
+- Calculates CSAT & NPS
+- Updates booking and package metrics
+- Escalates poor feedback to Customer Support
+- Provides dashboards and reports for management
 
-- **`force-app/main/default/`** - Your metadata source files live in this default package directory. You can configure additional package directories in the `sfdx-project.json` file.
-- **`config/`** - Scratch org definitions and project settings
-- **`scripts/`** - Automation scripts for common tasks
-- **`sfdx-project.json`** - Project manifest that defines package directories, namespace, API version, and other project-level settings
+The solution leverages **Sales Cloud**, **Salesforce Surveys**, **Flow Automation**, **Apex**, and **Reports & Dashboards** to provide a fully automated customer feedback management platform.
 
-See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm).
+---
 
-## Get Started
+# Business Problem
 
-Ready to start developing? The [Get Started with Salesforce DX](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_get_started_dx.htm) guide walks you through your first project, from creating a scratch org to creating a simple Apex class or LWC to deploying your code to a sandbox.
+ExploreConnect Travels collected customer feedback manually, leading to:
 
-## Common Salesforce CLI Commands
+- Inconsistent feedback collection
+- Low survey completion rates
+- Delayed response to dissatisfied customers
+- No centralized reporting
+- No customer satisfaction metrics
+- Manual follow-up process
 
-Here are common CLI commands that you'll use the most:
+---
 
-- `sf org login web`: Authorize an org
-- `sf org open`: Open your org in a browser
-- `sf org create scratch`: Create a scratch org
-- `sf project deploy start`: Deploy metadata to your org
-- `sf project retrieve start`: Retrieve metadata from your org
-- `sf template generate <artifact>`: Scaffold new components, such as Apex classes and triggers, LWC components, Lightning apps, and more
-- `sf apex <command>`: Run Apex tests, run anonymous Apex blocks, and view logs
-- `sf data <command>`: Work with test data
-- `sf alias <command>`: Manage org aliases
-- `sf config <command>`: Configure CLI settings
+# Solution
 
-## Use Agentforce Vibes to Build Lightning Apps
+This solution automates the complete customer feedback lifecycle.
 
-Transform your ideas into custom Lightning apps that extend CRM workflows directly in Lightning Experience. Through natural conversations with Agentforce Vibes, implement custom objects and fields, complex business logic, and dynamic UI components. See [Build a Lightning App Using Agentforce Vibes](https://developer.salesforce.com/docs/platform/einstein-for-devs/guide/lexapp-overview.html).
+```
+Trip Completed
+        │
+        ▼
+Survey Invitation
+        │
+        ▼
+Customer Completes Survey
+        │
+        ▼
+CSAT & NPS Calculation
+        │
+        ▼
+Negative Feedback?
+   │             │
+  No            Yes
+   │             │
+   ▼             ▼
+Dashboard    Create Case
+                │
+                ▼
+         Customer Support
+```
 
-## Additional Resources
+---
 
-- [Agentforce Vibes Developer Guide](https://developer.salesforce.com/docs/platform/einstein-for-devs/guide/einstein-overview.html)
-- [Salesforce CLI Installation Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/)
-- [Salesforce CLI Plugin Development Guide](https://developer.salesforce.com/docs/platform/salesforce-cli-plugin/guide/conceptual-overview.html)
-- [Salesforce VS Code Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
+# Solution Architecture
 
+```
+Customer
+    │
+    ▼
+Sales Cloud
+(Travel Booking)
+
+    │
+
+Automation Layer
+(Flows)
+
+    │
+
+Salesforce Surveys
+
+    │
+
+Business Logic
+(Apex)
+
+    │
+
+Analytics + Service Cloud
+```
+
+---
+
+# Key Features
+
+## Automated Survey Invitation
+
+- Survey automatically sent when booking status becomes **Completed**
+- Uses Salesforce Surveys
+- Sends invitation email automatically
+
+---
+
+## Customer Feedback Collection
+
+Captures:
+
+- Overall Experience
+- Guide Rating
+- Hotel Rating
+- Transportation Rating
+- Recommendation Score (NPS)
+- Comments
+- Photo Upload
+
+---
+
+## Automatic Rating Calculation
+
+Automatically calculates:
+
+- Average Rating
+- CSAT
+- Net Promoter Score (NPS)
+
+---
+
+## Automatic Case Creation
+
+If
+
+```
+Average Rating < 3
+```
+
+then Salesforce automatically:
+
+- Creates High Priority Case
+- Assigns Support Queue
+- Sends Internal Notification
+
+---
+
+## Reminder Automation
+
+Daily scheduled automation checks:
+
+- Survey Sent
+- Not Completed
+- More than 5 Days
+
+Automatically:
+
+- Sends Reminder Email
+- Creates Follow-up Task
+
+---
+
+## Analytics Dashboard
+
+Provides:
+
+- Survey Completion Rate
+- Destination Performance
+- Guide Performance
+- NPS Trend
+- Escalated Cases
+- Customer Satisfaction
+
+---
+
+# Technology Stack
+
+| Component | Technology |
+|------------|------------|
+| CRM | Salesforce Sales Cloud |
+| Surveys | Salesforce Surveys |
+| Automation | Record Triggered Flow |
+| Automation | Scheduled Flow |
+| Business Logic | Apex |
+| Batch Processing | Batch Apex |
+| Reporting | Salesforce Reports |
+| Dashboard | Salesforce Dashboard |
+
+---
+
+# Salesforce Objects
+
+## Custom Objects
+
+- Travel_Booking__c
+- Tour_Package__c
+
+## Standard Objects
+
+- Contact
+- Opportunity
+- Survey
+- Survey Invitation
+- Survey Response
+- Case
+- Task
+- EmailMessage
+
+---
+
+# Automation Components
+
+## Flow 1
+
+Booking Completed
+
+Responsible for:
+
+- Create Survey Invitation
+- Send Email
+- Update Booking
+
+---
+
+## Flow 2
+
+Survey Submitted
+
+Responsible for:
+
+- Retrieve Booking
+- Calculate Ratings
+- Update Booking
+- Trigger Escalation
+
+---
+
+## Flow 3
+
+Negative Feedback
+
+Responsible for:
+
+- Create Case
+- Assign Queue
+- Notify Support
+
+---
+
+## Scheduled Flow
+
+Responsible for:
+
+- Survey Reminder
+- Follow-up Task
+
+---
+
+# Apex Components
+
+## SurveyRatingCalculator
+
+Responsibilities
+
+- Calculate Average Rating
+- Calculate NPS
+- Update Booking
+- Update Package Metrics
+- Bulk Processing
+
+---
+
+## NightlySurveyAggregationBatch
+
+Responsibilities
+
+- Aggregate Ratings
+- Calculate Package NPS
+- Reconciliation
+- Email Summary
+
+---
+
+# Reporting
+
+The solution includes:
+
+- Survey Completion Report
+- Destination Performance
+- Guide Performance
+- Escalated Cases
+- NPS Trend
+- Customer Feedback Dashboard
+
+---
+
+# Security
+
+- Field Level Security
+- Queue Based Case Assignment
+- Salesforce Survey Guest Access
+- Read-only Metrics
+- Flow Fault Handling
+
+---
+
+# Project Structure
+
+```
+Salesforce-Surveys/
+│
+├── Apex
+│   ├── SurveyRatingCalculator.cls
+│   ├── NightlySurveyAggregationBatch.cls
+│
+├── Flows
+│   ├── BookingCompletion.flow
+│   ├── SurveyResponse.flow
+│   ├── NegativeFeedback.flow
+│   ├── ReminderScheduler.flow
+│
+├── Objects
+│   ├── Travel_Booking__c
+│   ├── Tour_Package__c
+│
+├── Reports
+│
+├── Dashboard
+│
+├── Documentation
+│
+└── README.md
+```
+
+---
+
+# High-Level Process Flow
+
+```
+Travel Booking Completed
+            │
+            ▼
+Generate Survey Invitation
+            │
+            ▼
+Send Email
+            │
+            ▼
+Customer Completes Survey
+            │
+            ▼
+Calculate Rating & NPS
+            │
+     ┌──────┴───────┐
+     │              │
+Positive      Negative
+     │              │
+     ▼              ▼
+Dashboard     Create Case
+                   │
+                   ▼
+            Customer Support
+```
+
+---
+
+# Benefits
+
+- 100% Automated Survey Distribution
+- Faster Customer Feedback Collection
+- Automated Customer Satisfaction Tracking
+- Automatic Service Recovery
+- Reduced Manual Effort
+- Improved Customer Experience
+- Real-time Dashboards
+- Scalable Architecture
+- Enterprise Ready
+
+---
+
+# Future Enhancements
+
+- Multi-language Surveys
+- SMS Survey Invitations
+- WhatsApp Integration
+- Einstein Sentiment Analysis
+- Experience Cloud Portal
+- AI-based Recommendation Engine
+- Slack Notifications
+- Agentforce Integration
+
+---
+
+# Author
+
+**Rishabh Patel**
+
+Salesforce Developer
+
+---
+
+## License
+
+This project is intended for educational, portfolio, and solution architecture demonstration purposes.
