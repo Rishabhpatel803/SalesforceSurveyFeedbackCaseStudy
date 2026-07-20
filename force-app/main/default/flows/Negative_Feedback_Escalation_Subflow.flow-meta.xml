@@ -47,7 +47,7 @@
         <inputAssignments>
             <field>OwnerId</field>
             <value>
-                <stringValue>3D00Gg8000005AqX7</stringValue>
+                <stringValue>00Gg700000ouwfeEAA</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -83,12 +83,6 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <inputAssignments>
-            <field>OwnerId</field>
-            <value>
-                <elementReference>Create_Case_Records.OwnerId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>Priority</field>
             <value>
                 <stringValue>High</stringValue>
@@ -116,12 +110,6 @@
             <field>WhatId</field>
             <value>
                 <elementReference>Create_Case_Records.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>WhoId</field>
-            <value>
-                <elementReference>Create_Case_Records.Travel_Booking__r.Id</elementReference>
             </value>
         </inputAssignments>
         <object>Task</object>
