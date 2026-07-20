@@ -1,0 +1,376 @@
+{
+  "version" : "67.0",
+  "nodes" : {
+    "LOAD_DATASET0" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "OwnerId", "IsDeleted", "Name", "MayEdit", "IsLocked", "TotalVersionsCount", "DeveloperName", "Description", "ActiveVersionId", "SurveyType", "LatestVersionId", "IsPartialSaveEnabled" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "Survey",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "Survey",
+          "mode" : "SYNCED"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        },
+        "preserveCurrencyFields" : [ ]
+      }
+    },
+    "LOAD_DATASET1" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "IsDeleted", "Name", "MayEdit", "IsLocked", "SurveyVersionId", "SurveyPageId", "QuestionType", "DeveloperName", "QuestionName", "ValidationType", "QuestionOrder", "PageName", "PageDisplayOrder", "RelatedQuestionId", "SubQuestionDisplayOrder", "AdditionalInfo" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "SurveyQuestion",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "SurveyQuestion",
+          "mode" : "SYNCED"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        },
+        "preserveCurrencyFields" : [ ]
+      }
+    },
+    "LOAD_DATASET2" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "IsDeleted", "ResponseShortText", "CreatedDate", "MayEdit", "IsLocked", "ResponseId", "QuestionId", "QuestionChoiceId", "SurveyVersionId", "InvitationId", "Datatype", "Rank", "DateValue", "DateTimeValue", "ChoiceValue", "ResponseValue", "IsTrueOrFalse" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "SurveyQuestionResponse",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "SurveyQuestionResponse",
+          "mode" : "SYNCED"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        },
+        "preserveCurrencyFields" : [ ]
+      }
+    },
+    "LOAD_DATASET3" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "IsDeleted", "Name", "CurrencyIsoCode", "CreatedDate", "CreatedById", "LastModifiedDate", "LastModifiedById", "SystemModstamp", "MayEdit", "IsLocked", "LastViewedDate", "LastReferencedDate", "InvitationId", "InterviewId", "InterviewGuid", "SubmitterId", "Status", "Language", "CompletionDateTime", "IpAddress", "Latitude", "Longitude", "SurveyVersionId", "SurveyId" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "SurveyResponse",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "SurveyResponse",
+          "mode" : "SYNCED"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        },
+        "preserveCurrencyFields" : [ ]
+      }
+    },
+    "LOAD_DATASET4" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "OwnerId", "IsDeleted", "Name", "MayEdit", "IsLocked", "SurveyId", "ParticipantId", "OptionsAllowParticipantAccessTheirResponse", "OptionsCollectAnonymousResponse", "OptionsAllowGuestUserResponse", "InvitationLink", "EmailBrandingId", "InviteExpiryDateTime", "CommunityId", "IsDefault", "UUID", "ResponseStatus", "UserId", "LeadId" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "SurveyInvitation",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "SurveyInvitation",
+          "mode" : "SYNCED"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        },
+        "preserveCurrencyFields" : [ ]
+      }
+    },
+    "LOAD_DATASET5" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "IsDeleted", "Name", "LastModifiedById", "SystemModstamp", "MayEdit", "IsLocked", "SurveyId", "SurveyVersionId", "SurveyInvitationId", "QuestionId", "QuestionChoiceId", "QuestionName", "ResponseValue", "Score", "ResponseCount", "ScoreType", "QuestionSkippedCount", "DateResponse", "QuestionDeveloperName" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "SurveyQuestionScore",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "SurveyQuestionScore",
+          "mode" : "SYNCED"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        },
+        "preserveCurrencyFields" : [ ]
+      }
+    },
+    "LOAD_DATASET6" : {
+      "action" : "load",
+      "sources" : [ ],
+      "parameters" : {
+        "fields" : [ "Id", "IsDeleted", "Name", "MayEdit", "IsLocked", "QuestionId", "SurveyVersionId", "DeveloperName" ],
+        "dataset" : {
+          "type" : "connectedDataset",
+          "label" : "SurveyQuestionChoice",
+          "connectionName" : "SFDC_LOCAL",
+          "sourceObjectName" : "SurveyQuestionChoice",
+          "mode" : "SYNCED"
+        },
+        "sampleDetails" : {
+          "type" : "TopN",
+          "sortBy" : [ ]
+        },
+        "preserveCurrencyFields" : [ ]
+      }
+    },
+    "OUTPUT0" : {
+      "action" : "save",
+      "sources" : [ "LOAD_DATASET0" ],
+      "parameters" : {
+        "fields" : [ ],
+        "dataset" : {
+          "type" : "analyticsDataset",
+          "label" : "Survey Dataset",
+          "name" : "Survey_Dataset",
+          "folderName" : "Feedback_Management_Analytics"
+        },
+        "measuresToCurrencies" : [ ]
+      }
+    },
+    "OUTPUT1" : {
+      "action" : "save",
+      "sources" : [ "LOAD_DATASET1" ],
+      "parameters" : {
+        "fields" : [ ],
+        "dataset" : {
+          "type" : "analyticsDataset",
+          "label" : "Survey Question Dataset",
+          "name" : "Survey_Question_Dataset",
+          "folderName" : "Feedback_Management_Analytics"
+        },
+        "measuresToCurrencies" : [ ]
+      }
+    },
+    "OUTPUT2" : {
+      "action" : "save",
+      "sources" : [ "LOAD_DATASET2" ],
+      "parameters" : {
+        "fields" : [ ],
+        "dataset" : {
+          "type" : "analyticsDataset",
+          "label" : "Survey Question Response Dataset",
+          "name" : "Survey_Question_Response_Dataset",
+          "folderName" : "Feedback_Management_Analytics"
+        },
+        "measuresToCurrencies" : [ ]
+      }
+    },
+    "OUTPUT3" : {
+      "action" : "save",
+      "sources" : [ "LOAD_DATASET3" ],
+      "parameters" : {
+        "fields" : [ ],
+        "dataset" : {
+          "type" : "analyticsDataset",
+          "label" : "Survey Response Dataset",
+          "name" : "Survey_Response_Dataset",
+          "folderName" : "Feedback_Management_Analytics"
+        },
+        "measuresToCurrencies" : [ ]
+      }
+    },
+    "OUTPUT4" : {
+      "action" : "save",
+      "sources" : [ "LOAD_DATASET4" ],
+      "parameters" : {
+        "fields" : [ ],
+        "dataset" : {
+          "type" : "analyticsDataset",
+          "label" : "Survey Invitation Dataset",
+          "name" : "Survey_Invitation_Dataset",
+          "folderName" : "Feedback_Management_Analytics"
+        },
+        "measuresToCurrencies" : [ ]
+      }
+    },
+    "OUTPUT5" : {
+      "action" : "save",
+      "sources" : [ "LOAD_DATASET5" ],
+      "parameters" : {
+        "fields" : [ ],
+        "dataset" : {
+          "type" : "analyticsDataset",
+          "label" : "Survey Question Score",
+          "name" : "Survey_Question_Score",
+          "folderName" : "Feedback_Management_Analytics"
+        },
+        "measuresToCurrencies" : [ ]
+      }
+    },
+    "OUTPUT6" : {
+      "action" : "save",
+      "sources" : [ "LOAD_DATASET6" ],
+      "parameters" : {
+        "fields" : [ ],
+        "dataset" : {
+          "type" : "analyticsDataset",
+          "label" : "Survey Question Choice Dataset",
+          "name" : "Survey_Question_Choice_Dataset",
+          "folderName" : "Feedback_Management_Analytics"
+        },
+        "measuresToCurrencies" : [ ]
+      }
+    }
+  },
+  "ui" : {
+    "nodes" : {
+      "LOAD_DATASET0" : {
+        "label" : "Survey",
+        "type" : "LOAD_DATASET",
+        "top" : 112,
+        "left" : 112,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "LOAD_DATASET1" : {
+        "label" : "SurveyQuestion",
+        "type" : "LOAD_DATASET",
+        "top" : 252,
+        "left" : 112,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "LOAD_DATASET2" : {
+        "label" : "SurveyQuestionResponse",
+        "type" : "LOAD_DATASET",
+        "top" : 392,
+        "left" : 112,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "LOAD_DATASET3" : {
+        "label" : "SurveyResponse",
+        "type" : "LOAD_DATASET",
+        "top" : 532,
+        "left" : 112,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "LOAD_DATASET4" : {
+        "label" : "SurveyInvitation",
+        "type" : "LOAD_DATASET",
+        "top" : 672,
+        "left" : 112,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "LOAD_DATASET5" : {
+        "label" : "SurveyQuestionScore",
+        "type" : "LOAD_DATASET",
+        "top" : 812,
+        "left" : 112,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "LOAD_DATASET6" : {
+        "label" : "SurveyQuestionChoice",
+        "type" : "LOAD_DATASET",
+        "top" : 952,
+        "left" : 112,
+        "parameters" : {
+          "sampleSize" : 2000
+        }
+      },
+      "OUTPUT0" : {
+        "label" : "Survey DataSet Output",
+        "description" : "",
+        "type" : "OUTPUT",
+        "top" : 112,
+        "left" : 252
+      },
+      "OUTPUT1" : {
+        "label" : "Survey Question DataSet Output",
+        "description" : "",
+        "type" : "OUTPUT",
+        "top" : 252,
+        "left" : 252
+      },
+      "OUTPUT2" : {
+        "label" : "Survey Question Response DataSet Output",
+        "description" : "",
+        "type" : "OUTPUT",
+        "top" : 392,
+        "left" : 252
+      },
+      "OUTPUT3" : {
+        "label" : "Survey Response DataSet Output",
+        "description" : "",
+        "type" : "OUTPUT",
+        "top" : 532,
+        "left" : 252
+      },
+      "OUTPUT4" : {
+        "label" : "Survey Invitation Dataset Output",
+        "description" : "",
+        "type" : "OUTPUT",
+        "top" : 672,
+        "left" : 252
+      },
+      "OUTPUT5" : {
+        "label" : "Survey Question Score DataSet Output",
+        "description" : "",
+        "type" : "OUTPUT",
+        "top" : 812,
+        "left" : 252
+      },
+      "OUTPUT6" : {
+        "label" : "Survey Question Choice DataSet Output",
+        "description" : "",
+        "type" : "OUTPUT",
+        "top" : 952,
+        "left" : 252
+      }
+    },
+    "connectors" : [ {
+      "source" : "LOAD_DATASET0",
+      "target" : "OUTPUT0"
+    }, {
+      "source" : "LOAD_DATASET1",
+      "target" : "OUTPUT1"
+    }, {
+      "source" : "LOAD_DATASET2",
+      "target" : "OUTPUT2"
+    }, {
+      "source" : "LOAD_DATASET3",
+      "target" : "OUTPUT3"
+    }, {
+      "source" : "LOAD_DATASET4",
+      "target" : "OUTPUT4"
+    }, {
+      "source" : "LOAD_DATASET5",
+      "target" : "OUTPUT5"
+    }, {
+      "source" : "LOAD_DATASET6",
+      "target" : "OUTPUT6"
+    } ],
+    "hiddenColumns" : [ ]
+  },
+  "runMode" : "full"
+}
