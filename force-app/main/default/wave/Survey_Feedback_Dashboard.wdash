@@ -1,0 +1,281 @@
+{
+  "dataSourceLinksInfo": { "enableAutomaticLinking": false, "excludeRelationships": [], "links": [] },
+  "filters": [
+    {
+      "dataset": { "id": "0Fbg7000000EI3VCAW", "name": "Survey_Report" },
+      "dependent": true,
+      "fields": [ "Join6.Survey.Name" ],
+      "label": "Survey",
+      "locked": false,
+      "operator": "in"
+    },
+    {
+      "dataset": { "id": "0Fbg7000000EI3VCAW", "name": "Survey_Report" },
+      "dependent": true,
+      "fields": [ "Name" ],
+      "label": "Contact",
+      "locked": false,
+      "operator": "in"
+    },
+    {
+      "dataset": { "id": "0Fbg7000000EI3VCAW", "name": "Survey_Report" },
+      "dependent": true,
+      "fields": [ "Join6.Name" ],
+      "label": "Tour Package",
+      "locked": false,
+      "operator": "in"
+    },
+    {
+      "dataset": { "id": "0Fbg7000000EI3VCAW", "name": "Survey_Report" },
+      "dependent": true,
+      "fields": [ "Join6.TravelSurveyJOIN.SurveyQuestionJOIN.QuestionType" ],
+      "label": "Question Type",
+      "locked": false,
+      "operator": "in"
+    }
+  ],
+  "gridLayouts": [
+    {
+      "maxWidth": 1200,
+      "name": "Default",
+      "numColumns": 12,
+      "pages": [
+        {
+          "label": "Survey Feedback",
+          "name": "survey_feedback_page",
+          "navigationHidden": false,
+          "widgets": [
+            { "colspan": 12, "column": 0, "name": "text_title", "row": 0, "rowspan": 3, "widgetStyle": { "backgroundColor": "#1B2A4A", "borderColor": "#2A3B5C", "borderEdges": ["bottom"], "borderRadius": 0, "borderWidth": 2 } },
+            { "colspan": 12, "column": 0, "name": "filterpanel_1", "row": 3, "rowspan": 7, "widgetStyle": { "backgroundColor": "#16233D", "borderColor": "#2A3B5C", "borderEdges": [], "borderRadius": 0, "borderWidth": 1 } },
+            { "colspan": 3, "column": 0, "name": "number_avg_rating", "row": 10, "rowspan": 6, "widgetStyle": { "backgroundColor": "#16233D", "borderColor": "#2A3B5C", "borderEdges": ["all"], "borderRadius": 4, "borderWidth": 1 } },
+            { "colspan": 3, "column": 3, "name": "number_nps_score", "row": 10, "rowspan": 6, "widgetStyle": { "backgroundColor": "#16233D", "borderColor": "#2A3B5C", "borderEdges": ["all"], "borderRadius": 4, "borderWidth": 1 } },
+            { "colspan": 3, "column": 6, "name": "number_qresp", "row": 10, "rowspan": 6, "widgetStyle": { "backgroundColor": "#16233D", "borderColor": "#2A3B5C", "borderEdges": ["all"], "borderRadius": 4, "borderWidth": 1 } },
+            { "colspan": 3, "column": 9, "name": "number_surveys", "row": 10, "rowspan": 6, "widgetStyle": { "backgroundColor": "#16233D", "borderColor": "#2A3B5C", "borderEdges": ["all"], "borderRadius": 4, "borderWidth": 1 } },
+            { "colspan": 12, "column": 0, "name": "text_pies", "row": 16, "rowspan": 3, "widgetStyle": { "borderEdges": [] } },
+            { "colspan": 4, "column": 0, "name": "chart_overall", "row": 19, "rowspan": 20, "widgetStyle": { "backgroundColor": "#16233D", "borderColor": "#2A3B5C", "borderEdges": ["all"], "borderRadius": 4, "borderWidth": 1 } },
+            { "colspan": 4, "column": 4, "name": "chart_guide", "row": 19, "rowspan": 20, "widgetStyle": { "backgroundColor": "#16233D", "borderColor": "#2A3B5C", "borderEdges": ["all"], "borderRadius": 4, "borderWidth": 1 } },
+            { "colspan": 4, "column": 8, "name": "chart_hotel", "row": 19, "rowspan": 20, "widgetStyle": { "backgroundColor": "#16233D", "borderColor": "#2A3B5C", "borderEdges": ["all"], "borderRadius": 4, "borderWidth": 1 } },
+            { "colspan": 4, "column": 0, "name": "chart_transport", "row": 39, "rowspan": 20, "widgetStyle": { "backgroundColor": "#16233D", "borderColor": "#2A3B5C", "borderEdges": ["all"], "borderRadius": 4, "borderWidth": 1 } },
+            { "colspan": 4, "column": 4, "name": "chart_recommend", "row": 39, "rowspan": 20, "widgetStyle": { "backgroundColor": "#16233D", "borderColor": "#2A3B5C", "borderEdges": ["all"], "borderRadius": 4, "borderWidth": 1 } },
+            { "colspan": 4, "column": 8, "name": "chart_avg_by_question", "row": 39, "rowspan": 20, "widgetStyle": { "backgroundColor": "#16233D", "borderColor": "#2A3B5C", "borderEdges": ["all"], "borderRadius": 4, "borderWidth": 1 } },
+            { "colspan": 12, "column": 0, "name": "text_table", "row": 59, "rowspan": 3, "widgetStyle": { "borderEdges": [] } },
+            { "colspan": 12, "column": 0, "name": "table_summary", "row": 62, "rowspan": 24, "widgetStyle": { "backgroundColor": "#16233D", "borderColor": "#2A3B5C", "borderEdges": ["all"], "borderRadius": 4, "borderWidth": 1 } }
+          ]
+        }
+      ],
+      "rowHeight": "fine",
+      "selectors": [],
+      "style": { "alignmentX": "left", "alignmentY": "top", "backgroundColor": "#0B1524", "cellSpacingX": 8, "cellSpacingY": 8, "fit": "original", "gutterColor": "#0B1524" },
+      "version": 1.0
+    }
+  ],
+  "layouts": [],
+  "steps": {
+    "kpi_avg_rating": {
+      "broadcastFacet": true,
+      "groups": [],
+      "label": "Avg Rating",
+      "numbers": [],
+      "query": "q = load \"Survey_Report\";\nq = group q by all;\nq = foreach q generate avg('Join6.Average_Rating__c') as 'avg_rating';",
+      "receiveFacetSource": { "mode": "all", "steps": [] },
+      "selectMode": "single",
+      "strings": [],
+      "type": "saql",
+      "useGlobal": true,
+      "visualizationParameters": { "parameters": { "visualizationType": "pie" }, "type": "chart" }
+    },
+    "kpi_nps_score": {
+      "broadcastFacet": true,
+      "groups": [],
+      "label": "Avg NPS Score",
+      "numbers": [],
+      "query": "q = load \"Survey_Report\";\nq = group q by all;\nq = foreach q generate avg('Join6.Travel_BookingJOIN.NPS_Score__c') as 'nps_score';",
+      "receiveFacetSource": { "mode": "all", "steps": [] },
+      "selectMode": "single",
+      "strings": [],
+      "type": "saql",
+      "useGlobal": true,
+      "visualizationParameters": { "parameters": { "visualizationType": "pie" }, "type": "chart" }
+    },
+    "kpi_qresp": {
+      "broadcastFacet": true,
+      "groups": [],
+      "label": "Question Responses",
+      "numbers": [],
+      "query": "q = load \"Survey_Report\";\nq = group q by all;\nq = foreach q generate unique('Join6.TravelSurveyJOIN.Id') as 'q_responses';",
+      "receiveFacetSource": { "mode": "all", "steps": [] },
+      "selectMode": "single",
+      "strings": [],
+      "type": "saql",
+      "useGlobal": true,
+      "visualizationParameters": { "parameters": { "visualizationType": "pie" }, "type": "chart" }
+    },
+    "kpi_total_surveys": {
+      "broadcastFacet": true,
+      "groups": [],
+      "label": "Completed Surveys",
+      "numbers": [],
+      "query": "q = load \"Survey_Report\";\nq = group q by all;\nq = foreach q generate unique('Join6.UserSurveyJOIN.Id') as 'total_surveys';",
+      "receiveFacetSource": { "mode": "all", "steps": [] },
+      "selectMode": "single",
+      "strings": [],
+      "type": "saql",
+      "useGlobal": true,
+      "visualizationParameters": { "parameters": { "visualizationType": "pie" }, "type": "chart" }
+    },
+    "pie_overall": {
+      "broadcastFacet": false,
+      "datasets": [ { "name": "Survey_Report" } ],
+      "isGlobal": false,
+      "query": { "aggregateFilters": [], "columnGroups": [], "columnTotals": [], "limit": 2000, "orders": [ { "name": "Join6.TravelSurveyJOIN.ResponseValue", "filters": [], "ascending": true } ], "rowTotals": [], "sourceFilters": { "Survey_Report": { "filters": [] } }, "sources": [ { "columns": [ { "field": [ "unique", "Join6.TravelSurveyJOIN.Id" ], "name": "count_responses" } ], "filters": [ [ "Join6.TravelSurveyJOIN.SurveyQues.QuestionName", [ "Overall Experience" ], "in" ] ], "groups": [ "Join6.TravelSurveyJOIN.ResponseValue" ], "joins": [], "name": "Survey_Report" } ] },
+      "receiveFacetSource": { "mode": "none", "steps": [] },
+      "selectMode": "multi",
+      "sortable": true,
+      "type": "aggregateflex",
+      "useExternalFilters": true,
+      "useGlobal": true,
+      "visualizationParameters": { "options": {}, "visualizationType": "pie" }
+    },
+    "pie_guide": {
+      "broadcastFacet": false,
+      "datasets": [ { "name": "Survey_Report" } ],
+      "isGlobal": false,
+      "query": { "aggregateFilters": [], "columnGroups": [], "columnTotals": [], "limit": 2000, "orders": [ { "name": "Join6.TravelSurveyJOIN.ResponseValue", "filters": [], "ascending": true } ], "rowTotals": [], "sourceFilters": { "Survey_Report": { "filters": [] } }, "sources": [ { "columns": [ { "field": [ "unique", "Join6.TravelSurveyJOIN.Id" ], "name": "count_responses" } ], "filters": [ [ "Join6.TravelSurveyJOIN.SurveyQues.QuestionName", [ "Guide Rating" ], "in" ] ], "groups": [ "Join6.TravelSurveyJOIN.ResponseValue" ], "joins": [], "name": "Survey_Report" } ] },
+      "receiveFacetSource": { "mode": "none", "steps": [] },
+      "selectMode": "multi",
+      "sortable": true,
+      "type": "aggregateflex",
+      "useExternalFilters": true,
+      "useGlobal": true,
+      "visualizationParameters": { "options": {}, "visualizationType": "pie" }
+    },
+    "pie_hotel": {
+      "broadcastFacet": false,
+      "datasets": [ { "name": "Survey_Report" } ],
+      "isGlobal": false,
+      "query": { "aggregateFilters": [], "columnGroups": [], "columnTotals": [], "limit": 2000, "orders": [ { "name": "Join6.TravelSurveyJOIN.ResponseValue", "filters": [], "ascending": true } ], "rowTotals": [], "sourceFilters": { "Survey_Report": { "filters": [] } }, "sources": [ { "columns": [ { "field": [ "unique", "Join6.TravelSurveyJOIN.Id" ], "name": "count_responses" } ], "filters": [ [ "Join6.TravelSurveyJOIN.SurveyQues.QuestionName", [ "Hotel Rating" ], "in" ] ], "groups": [ "Join6.TravelSurveyJOIN.ResponseValue" ], "joins": [], "name": "Survey_Report" } ] },
+      "receiveFacetSource": { "mode": "none", "steps": [] },
+      "selectMode": "multi",
+      "sortable": true,
+      "type": "aggregateflex",
+      "useExternalFilters": true,
+      "useGlobal": true,
+      "visualizationParameters": { "options": {}, "visualizationType": "pie" }
+    },
+    "pie_transport": {
+      "broadcastFacet": false,
+      "datasets": [ { "name": "Survey_Report" } ],
+      "isGlobal": false,
+      "query": { "aggregateFilters": [], "columnGroups": [], "columnTotals": [], "limit": 2000, "orders": [ { "name": "Join6.TravelSurveyJOIN.ResponseValue", "filters": [], "ascending": true } ], "rowTotals": [], "sourceFilters": { "Survey_Report": { "filters": [] } }, "sources": [ { "columns": [ { "field": [ "unique", "Join6.TravelSurveyJOIN.Id" ], "name": "count_responses" } ], "filters": [ [ "Join6.TravelSurveyJOIN.SurveyQues.QuestionName", [ "Transportation Rating" ], "in" ] ], "groups": [ "Join6.TravelSurveyJOIN.ResponseValue" ], "joins": [], "name": "Survey_Report" } ] },
+      "receiveFacetSource": { "mode": "none", "steps": [] },
+      "selectMode": "multi",
+      "sortable": true,
+      "type": "aggregateflex",
+      "useExternalFilters": true,
+      "useGlobal": true,
+      "visualizationParameters": { "options": {}, "visualizationType": "pie" }
+    },
+    "pie_recommend": {
+      "broadcastFacet": false,
+      "datasets": [ { "name": "Survey_Report" } ],
+      "isGlobal": false,
+      "query": { "aggregateFilters": [], "columnGroups": [], "columnTotals": [], "limit": 2000, "orders": [ { "name": "Join6.TravelSurveyJOIN.ResponseValue", "filters": [], "ascending": true } ], "rowTotals": [], "sourceFilters": { "Survey_Report": { "filters": [] } }, "sources": [ { "columns": [ { "field": [ "unique", "Join6.TravelSurveyJOIN.Id" ], "name": "count_responses" } ], "filters": [ [ "Join6.TravelSurveyJOIN.SurveyQues.QuestionName", [ "Likelihood to Recommend" ], "in" ] ], "groups": [ "Join6.TravelSurveyJOIN.ResponseValue" ], "joins": [], "name": "Survey_Report" } ] },
+      "receiveFacetSource": { "mode": "none", "steps": [] },
+      "selectMode": "multi",
+      "sortable": true,
+      "type": "aggregateflex",
+      "useExternalFilters": true,
+      "useGlobal": true,
+      "visualizationParameters": { "options": {}, "visualizationType": "pie" }
+    },
+    "bar_avg_by_question": {
+      "broadcastFacet": false,
+      "datasets": [ { "name": "Survey_Report" } ],
+      "isGlobal": false,
+      "query": { "aggregateFilters": [], "columnGroups": [], "columnTotals": [], "limit": 2000, "orders": [ { "name": "avg_value", "filters": [], "ascending": false } ], "rowTotals": [], "sourceFilters": { "Survey_Report": { "filters": [] } }, "sources": [ { "columns": [ { "field": [ "avg", "Join6.TravelSurveyJOIN.SurveyQues.ResponseValue" ], "name": "avg_value" } ], "filters": [], "groups": [ "Join6.TravelSurveyJOIN.SurveyQues.QuestionName" ], "joins": [], "name": "Survey_Report" } ] },
+      "receiveFacetSource": { "mode": "none", "steps": [] },
+      "selectMode": "multi",
+      "sortable": true,
+      "type": "aggregateflex",
+      "useExternalFilters": true,
+      "useGlobal": true,
+      "visualizationParameters": { "options": {}, "visualizationType": "hbar" }
+    },
+    "tbl_summary": {
+      "broadcastFacet": false,
+      "datasets": [ { "name": "Survey_Report" } ],
+      "isGlobal": false,
+      "query": { "aggregateFilters": [], "columnGroups": [], "columnTotals": [], "limit": 2000, "orders": [ { "name": "Join6.TravelSurveyJOIN.SurveyQues.QuestionName", "filters": [], "ascending": true } ], "rowTotals": [], "sourceFilters": { "Survey_Report": { "filters": [] } }, "sources": [ { "columns": [ { "field": [ "avg", "Join6.TravelSurveyJOIN.SurveyQues.ResponseValue" ], "name": "avg_value" }, { "field": [ "avg", "Join6.TravelSurveyJOIN.SurveyQues.Score" ], "name": "avg_score" }, { "field": [ "unique", "Join6.TravelSurveyJOIN.Id" ], "name": "count_responses" } ], "filters": [], "groups": [ "Join6.TravelSurveyJOIN.SurveyQues.QuestionName" ], "joins": [], "name": "Survey_Report" } ] },
+      "receiveFacetSource": { "mode": "none", "steps": [] },
+      "selectMode": "multi",
+      "sortable": true,
+      "type": "aggregateflex",
+      "useExternalFilters": true,
+      "useGlobal": true,
+      "visualizationParameters": { "options": {}, "visualizationType": "table" }
+    }
+  },
+  "widgetStyle": { "backgroundColor": "#16233D", "borderColor": "#2A3B5C", "borderEdges": [], "borderRadius": 0, "borderWidth": 1 },
+  "widgets": {
+    "text_title": {
+      "parameters": { "content": { "richTextContent": [ { "attributes": { "size": "22px", "color": "#FFFFFF", "bold": true }, "insert": "ExploreConnect Travels — Survey Feedback Analytics" }, { "attributes": { "align": "left" }, "insert": "\n" } ] }, "interactions": [], "showActionMenu": false },
+      "type": "text"
+    },
+    "filterpanel_1": {
+      "parameters": { "filterItemOptions": { "backgroundColor": "#1B2A4A", "borderColor": "#2A3B5C", "borderRadius": 4, "borderWidth": 1, "propertyColor": "#AEBAD1", "valueColor": "#FFFFFF" }, "filters": [], "itemsPerRow": 4, "showAllFilters": true, "title": { "separatorColor": "#2A3B5C", "text": { "align": "left", "color": "#AEBAD1", "fontSize": 12, "label": "Filters" }, "visible": true } },
+      "type": "filterpanel"
+    },
+    "number_avg_rating": {
+      "parameters": { "step": "kpi_avg_rating", "measureField": "avg_rating", "title": "Avg Rating (CSAT)", "compact": false, "exploreLink": false, "numberColor": "#4FD1C5", "numberSize": 28, "titleColor": "#AEBAD1", "titleSize": 14, "textAlignment": "center", "showActionMenu": true, "interactions": [], "tooltip": { "customizeTooltip": false } },
+      "type": "number"
+    },
+    "number_nps_score": {
+      "parameters": { "step": "kpi_nps_score", "measureField": "nps_score", "title": "Avg NPS Score", "compact": false, "exploreLink": false, "numberColor": "#63B3ED", "numberSize": 28, "titleColor": "#AEBAD1", "titleSize": 14, "textAlignment": "center", "showActionMenu": true, "interactions": [], "tooltip": { "customizeTooltip": false } },
+      "type": "number"
+    },
+    "number_qresp": {
+      "parameters": { "step": "kpi_qresp", "measureField": "q_responses", "title": "Question Responses", "compact": false, "exploreLink": false, "numberColor": "#F6AD55", "numberSize": 28, "titleColor": "#AEBAD1", "titleSize": 14, "textAlignment": "center", "showActionMenu": true, "interactions": [], "tooltip": { "customizeTooltip": false } },
+      "type": "number"
+    },
+    "number_surveys": {
+      "parameters": { "step": "kpi_total_surveys", "measureField": "total_surveys", "title": "Completed Surveys", "compact": false, "exploreLink": false, "numberColor": "#FFFFFF", "numberSize": 28, "titleColor": "#AEBAD1", "titleSize": 14, "textAlignment": "center", "showActionMenu": true, "interactions": [], "tooltip": { "customizeTooltip": false } },
+      "type": "number"
+    },
+    "text_pies": {
+      "parameters": { "content": { "richTextContent": [ { "attributes": { "size": "16px", "color": "#E5EBF5", "bold": true }, "insert": "Response Distribution by Survey Question" }, { "attributes": { "align": "left" }, "insert": "\n" } ] }, "interactions": [], "showActionMenu": false },
+      "type": "text"
+    },
+    "chart_overall": {
+      "parameters": { "step": "pie_overall", "visualizationType": "pie", "inner": 0, "exploreLink": true, "showActionMenu": true, "showMeasureTitle": true, "theme": "wavedark", "valueType": "number", "centerValueType": "number", "centerText": "", "applyConditionalFormatting": true, "compactDecimalDigits": -1, "title": { "fontSize": 14, "subtitleFontSize": 11, "label": "Overall Experience", "align": "center", "subtitleLabel": "" }, "legend": { "descOrder": false, "showHeader": true, "show": true, "customSize": "auto", "position": "right-top", "inside": false }, "trellis": { "flipLabels": false, "showGridLines": true, "size": [ 100, 100 ], "enable": false, "type": "wrap", "chartsPerLine": 4 }, "columnMap": { "trellis": [], "dimension": [ "Join6.TravelSurveyJOIN.ResponseValue" ], "plots": [ "count_responses" ] }, "plots": [ { "column": [ "count_responses" ] } ], "tooltip": { "content": { "legend": { "showBinLabel": true, "measures": [], "showNullValues": true, "customizeLegend": false, "showPercentage": true, "showDimensions": true, "showMeasures": true, "dimensions": [] } } } },
+      "type": "chart"
+    },
+    "chart_guide": {
+      "parameters": { "step": "pie_guide", "visualizationType": "pie", "inner": 0, "exploreLink": true, "showActionMenu": true, "showMeasureTitle": true, "theme": "wavedark", "valueType": "number", "centerValueType": "number", "centerText": "", "applyConditionalFormatting": true, "compactDecimalDigits": -1, "title": { "fontSize": 14, "subtitleFontSize": 11, "label": "Guide Rating", "align": "center", "subtitleLabel": "" }, "legend": { "descOrder": false, "showHeader": true, "show": true, "customSize": "auto", "position": "right-top", "inside": false }, "trellis": { "flipLabels": false, "showGridLines": true, "size": [ 100, 100 ], "enable": false, "type": "wrap", "chartsPerLine": 4 }, "columnMap": { "trellis": [], "dimension": [ "Join6.TravelSurveyJOIN.ResponseValue" ], "plots": [ "count_responses" ] }, "plots": [ { "column": [ "count_responses" ] } ], "tooltip": { "content": { "legend": { "showBinLabel": true, "measures": [], "showNullValues": true, "customizeLegend": false, "showPercentage": true, "showDimensions": true, "showMeasures": true, "dimensions": [] } } } },
+      "type": "chart"
+    },
+    "chart_hotel": {
+      "parameters": { "step": "pie_hotel", "visualizationType": "pie", "inner": 0, "exploreLink": true, "showActionMenu": true, "showMeasureTitle": true, "theme": "wavedark", "valueType": "number", "centerValueType": "number", "centerText": "", "applyConditionalFormatting": true, "compactDecimalDigits": -1, "title": { "fontSize": 14, "subtitleFontSize": 11, "label": "Hotel Rating", "align": "center", "subtitleLabel": "" }, "legend": { "descOrder": false, "showHeader": true, "show": true, "customSize": "auto", "position": "right-top", "inside": false }, "trellis": { "flipLabels": false, "showGridLines": true, "size": [ 100, 100 ], "enable": false, "type": "wrap", "chartsPerLine": 4 }, "columnMap": { "trellis": [], "dimension": [ "Join6.TravelSurveyJOIN.ResponseValue" ], "plots": [ "count_responses" ] }, "plots": [ { "column": [ "count_responses" ] } ], "tooltip": { "content": { "legend": { "showBinLabel": true, "measures": [], "showNullValues": true, "customizeLegend": false, "showPercentage": true, "showDimensions": true, "showMeasures": true, "dimensions": [] } } } },
+      "type": "chart"
+    },
+    "chart_transport": {
+      "parameters": { "step": "pie_transport", "visualizationType": "pie", "inner": 0, "exploreLink": true, "showActionMenu": true, "showMeasureTitle": true, "theme": "wavedark", "valueType": "number", "centerValueType": "number", "centerText": "", "applyConditionalFormatting": true, "compactDecimalDigits": -1, "title": { "fontSize": 14, "subtitleFontSize": 11, "label": "Transportation Rating", "align": "center", "subtitleLabel": "" }, "legend": { "descOrder": false, "showHeader": true, "show": true, "customSize": "auto", "position": "right-top", "inside": false }, "trellis": { "flipLabels": false, "showGridLines": true, "size": [ 100, 100 ], "enable": false, "type": "wrap", "chartsPerLine": 4 }, "columnMap": { "trellis": [], "dimension": [ "Join6.TravelSurveyJOIN.ResponseValue" ], "plots": [ "count_responses" ] }, "plots": [ { "column": [ "count_responses" ] } ], "tooltip": { "content": { "legend": { "showBinLabel": true, "measures": [], "showNullValues": true, "customizeLegend": false, "showPercentage": true, "showDimensions": true, "showMeasures": true, "dimensions": [] } } } },
+      "type": "chart"
+    },
+    "chart_recommend": {
+      "parameters": { "step": "pie_recommend", "visualizationType": "pie", "inner": 0, "exploreLink": true, "showActionMenu": true, "showMeasureTitle": true, "theme": "wavedark", "valueType": "number", "centerValueType": "number", "centerText": "", "applyConditionalFormatting": true, "compactDecimalDigits": -1, "title": { "fontSize": 14, "subtitleFontSize": 11, "label": "Likelihood to Recommend (NPS)", "align": "center", "subtitleLabel": "" }, "legend": { "descOrder": false, "showHeader": true, "show": true, "customSize": "auto", "position": "right-top", "inside": false }, "trellis": { "flipLabels": false, "showGridLines": true, "size": [ 100, 100 ], "enable": false, "type": "wrap", "chartsPerLine": 4 }, "columnMap": { "trellis": [], "dimension": [ "Join6.TravelSurveyJOIN.ResponseValue" ], "plots": [ "count_responses" ] }, "plots": [ { "column": [ "count_responses" ] } ], "tooltip": { "content": { "legend": { "showBinLabel": true, "measures": [], "showNullValues": true, "customizeLegend": false, "showPercentage": true, "showDimensions": true, "showMeasures": true, "dimensions": [] } } } },
+      "type": "chart"
+    },
+    "chart_avg_by_question": {
+      "parameters": { "step": "bar_avg_by_question", "visualizationType": "hbar", "exploreLink": true, "showActionMenu": true, "theme": "wavedark", "valueType": "compactNumber", "compactDecimalDigits": -1, "applyConditionalFormatting": true, "autoFitMode": "keepLabels", "binValues": false, "showZero": true, "title": { "fontSize": 14, "subtitleFontSize": 11, "label": "Avg Response Value by Question", "align": "center", "subtitleLabel": "" }, "legend": { "descOrder": false, "showHeader": true, "show": false, "customSize": "auto", "position": "right-top", "inside": false }, "trellis": { "flipLabels": false, "showGridLines": true, "size": [ 100, 100 ], "enable": false, "type": "x", "chartsPerLine": 4 }, "columnMap": { "trellis": [], "split": [], "dimensionAxis": [ "Join6.TravelSurveyJOIN.SurveyQues.QuestionName" ], "plots": [ "avg_value" ] }, "measureAxis1": { "sqrtScale": false, "showTitle": true, "showAxis": true, "title": "", "customDomain": { "showDomain": false } }, "measureAxis2": { "sqrtScale": false, "showTitle": true, "showAxis": true, "title": "", "customDomain": { "showDomain": false } }, "dimensionAxis": { "showTitle": true, "customSize": "auto", "showAxis": true, "title": "", "icons": { "useIcons": false, "iconProps": { "fit": "cover", "column": "", "type": "round" } } }, "tooltip": { "content": { "legend": { "showBinLabel": true, "measures": [], "showNullValues": true, "customizeLegend": false, "showPercentage": true, "showDimensions": true, "showMeasures": true, "dimensions": [] } } } },
+      "type": "chart"
+    },
+    "text_table": {
+      "parameters": { "content": { "richTextContent": [ { "attributes": { "size": "16px", "color": "#E5EBF5", "bold": true }, "insert": "Overall Survey Performance by Question" }, { "attributes": { "align": "left" }, "insert": "\n" } ] }, "interactions": [], "showActionMenu": false },
+      "type": "text"
+    },
+    "table_summary": {
+      "parameters": { "step": "tbl_summary", "columns": [], "columnProperties": {}, "headerProperties": {}, "customBulkActions": [], "interactions": [], "showActionMenu": true, "totals": true, "mode": "fittocontainer", "cell": { "backgroundColor": "#16233D", "fontColor": "#D7DEEC", "fontSize": 12 }, "header": { "backgroundColor": "#1B2A4A", "fontColor": "#E5EBF5", "fontSize": 12 }, "innerMajorBorderColor": "#2A3B5C", "innerMinorBorderColor": "#22314F", "borderColor": "#2A3B5C", "borderWidth": 1 },
+      "type": "table"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WaveDashboard xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <content xsi:nil="true"/>
+    <application>Feedback_Management_Analytics</application>
+    <dateVersion>1</dateVersion>
+    <description>Survey feedback analytics: per-question response distribution pie charts, CSAT/NPS KPIs, and global filters by Survey, Contact and Tour Package.</description>
+    <masterLabel>Survey Feedback Dashboard</masterLabel>
+</WaveDashboard>
