@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WaveLens xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <content xsi:nil="true"/>
+    <application>Feedback_Management_Analytics</application>
+    <datasets>Survey_Report</datasets>
+    <dateVersion>1</dateVersion>
+    <description>Average response value and response count per survey question - overall survey performance.</description>
+    <masterLabel>Survey Performance Overview</masterLabel>
+    <visualizationType>hbar</visualizationType>
+</WaveLens>

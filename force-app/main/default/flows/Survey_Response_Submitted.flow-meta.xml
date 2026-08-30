@@ -44,6 +44,13 @@
                 <leftValueReference>Get_Travel_Booking_Records.Average_Rating__c</leftValueReference>
                 <operator>EqualTo</operator>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Completed</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Negative_Feedback_Escalation</targetReference>
             </connector>
@@ -81,14 +88,6 @@
         <connector>
             <targetReference>SurveyRatingCalculator_Apex</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Survey_Invitation__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.Invitation.Id</elementReference>
-            </value>
-        </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Travel_Booking__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -99,6 +98,14 @@
         <connector>
             <targetReference>Get_Travel_Booking_Records</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Status</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Completed</stringValue>
+            </value>
+        </filters>
         <object>SurveyResponse</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>

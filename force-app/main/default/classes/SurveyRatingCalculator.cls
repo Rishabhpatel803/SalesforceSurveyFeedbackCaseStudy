@@ -1,10 +1,11 @@
-public with sharing class SurveyRatingCalculator {
+public without sharing class SurveyRatingCalculator {
 
     /**
      * Request class for invocable method input
      */
     public class Request {
-        @InvocableVariable(label='Survey Response ID')
+        
+        @InvocableVariable(required=true label='Survey Response ID')
         public String surveyResponseId;
 
         @InvocableVariable(required=true label='Booking ID')
@@ -38,173 +39,199 @@ public with sharing class SurveyRatingCalculator {
      * @param requests List of Request objects containing survey response IDs
      * @return List of Result objects with calculated ratings and status
      */
-    @InvocableMethod(label='Calculate Booking Rating' description='Calculate average rating from survey responses and update booking records' category='Survey')
+    @InvocableMethod(
+        label='Calculate Booking Rating'
+        description='Calculate average rating from survey responses and update booking records'
+        category='Survey'
+    )
     public static List<Result> calculateBookingRating(List<Request> requests) {
-        // Pre-size the results list 1:1 with requests and fill in as we go,
-        // so a failure anywhere never desynchronizes the output from the input.
+
         List<Result> results = new List<Result>();
+
         for (Integer i = 0; i < requests.size(); i++) {
-            Result r = new Result();
-            r.bookingId = requests[i].bookingId;
-            results.add(r);
+            results.add(new Result());
         }
 
-        List<Travel_Booking__c> bookingsToUpdate = new List<Travel_Booking__c>();
-        Set<Id> packageIds = new Set<Id>();
-
         try {
-            // ---- Step 1: parse/validate IDs per-request, without blowing up the batch ----
+
             Set<Id> surveyResponseIds = new Set<Id>();
-            Set<Id> bookingIds = new Set<Id>();
-            // Track parsed IDs per request index so we don't re-parse (and don't
-            // fail) later when a value is blank or malformed.
-            Map<Integer, Id> surveyIdByIndex = new Map<Integer, Id>();
-            Map<Integer, Id> bookingIdByIndex = new Map<Integer, Id>();
 
-            for (Integer i = 0; i < requests.size(); i++) {
-                Request req = requests[i];
-                Result result = results[i];
-
-                if (String.isBlank(req.bookingId)) {
-                    result.errorMessage = 'Booking ID is required';
-                    continue;
-                }
-                try {
-                    Id bId = Id.valueOf(req.bookingId);
-                    bookingIdByIndex.put(i, bId);
-                    bookingIds.add(bId);
-                } catch (Exception e) {
-                    result.errorMessage = 'Invalid Booking ID: ' + req.bookingId;
-                    continue;
-                }
-
+            for (Request req : requests) {
                 if (String.isNotBlank(req.surveyResponseId)) {
-                    try {
-                        Id sId = Id.valueOf(req.surveyResponseId);
-                        surveyIdByIndex.put(i, sId);
-                        surveyResponseIds.add(sId);
-                    } catch (Exception e) {
-                        result.errorMessage = 'Invalid Survey Response ID: ' + req.surveyResponseId;
-                        continue;
-                    }
-                } else {
-                    result.errorMessage = 'Survey Response ID is required';
-                    continue;
+                    surveyResponseIds.add(
+                        (Id)req.surveyResponseId
+                    );
                 }
             }
 
-            if (surveyResponseIds.isEmpty() || bookingIds.isEmpty()) {
-                // Nothing valid to query - per-request error messages are already set above.
+            if (surveyResponseIds.isEmpty()) {
                 return results;
             }
 
-            // ---- Step 2: bulk queries ----
-            List<SurveyResponse> surveyResponses = [
-                SELECT Id, InvitationId
-                FROM SurveyResponse
-                WHERE Id IN :surveyResponseIds
-                LIMIT 50000
-            ];
+            /*
+            * STEP 1
+            * Get Survey Responses
+            */
+            Map<Id, SurveyResponse> surveyResponseMap =
+                new Map<Id, SurveyResponse>([
+                    SELECT Id,
+                        InvitationId
+                    FROM SurveyResponse
+                    WHERE Id IN :surveyResponseIds
+                ]);
 
-            Map<Id, Id> invitationIdBySurveyId = new Map<Id, Id>();
             Set<Id> invitationIds = new Set<Id>();
-            for (SurveyResponse sr : surveyResponses) {
+
+            for (SurveyResponse sr : surveyResponseMap.values()) {
                 if (sr.InvitationId != null) {
                     invitationIds.add(sr.InvitationId);
-                    invitationIdBySurveyId.put(sr.Id, sr.InvitationId);
                 }
             }
 
-            // TODO: filter to only the four rating questions for this survey, e.g.
-            //   WHERE InvitationId IN :invitationIds AND QuestionId IN :ratingQuestionIds
-            // As written, this pulls every question response tied to the invitation,
-            // which will pollute the average with non-rating answers.
-            List<SurveyQuestionResponse> ratingResponses = invitationIds.isEmpty()
-                ? new List<SurveyQuestionResponse>()
-                : [
-                    SELECT Id, InvitationId, ResponseValue, NumberValue
-                    FROM SurveyQuestionResponse
-                    WHERE InvitationId IN :invitationIds
-                    LIMIT 50000
-                ];
+            if (invitationIds.isEmpty()) {
+                return results;
+            }
 
-            List<Travel_Booking__c> existingBookings = [
-                SELECT Id, Tour_Package__c, Average_Rating__c
+            /*
+            * STEP 2
+            * Find booking(s) by invitation id
+            */
+            Map<Id, Travel_Booking__c> bookingByInvitation =
+                new Map<Id, Travel_Booking__c>();
+
+            for (Travel_Booking__c booking : [
+                SELECT Id,
+                    Survey_Invitation__r.Id,
+                    Tour_Package__c,
+                    Average_Rating__c,
+                    Survey_Completed__c
                 FROM Travel_Booking__c
-                WHERE Id IN :bookingIds
-                LIMIT 50000
-            ];
-            Map<Id, Travel_Booking__c> bookingMap = new Map<Id, Travel_Booking__c>(existingBookings);
+                WHERE Survey_Invitation__r.Id IN :invitationIds
+            ]) {
 
-            // Organize ratings by invitation ID
-            Map<Id, List<Decimal>> surveyRatingsMap = new Map<Id, List<Decimal>>();
-            for (SurveyQuestionResponse resp : ratingResponses) {
-                Decimal ratingValue;
-                if (resp.NumberValue != null) {
-                    ratingValue = resp.NumberValue;
-                } else if (String.isNotBlank(resp.ResponseValue) && resp.ResponseValue.isNumeric()) {
-                    ratingValue = Decimal.valueOf(resp.ResponseValue);
-                } else {
+                bookingByInvitation.put(
+                    (Id)booking.Survey_Invitation__r.Id,
+                    booking
+                );
+            }
+
+            /*
+            * STEP 3
+            * Get all survey ratings
+            */
+            List<SurveyQuestionResponse> ratingResponses = [
+                SELECT Id,
+                    InvitationId,
+                    ResponseValue,
+                    NumberValue
+                FROM SurveyQuestionResponse
+                WHERE InvitationId IN :invitationIds
+            ];
+
+            Map<Id, List<Decimal>> ratingsByInvitation =
+                new Map<Id, List<Decimal>>();
+
+            for (SurveyQuestionResponse response : ratingResponses) {
+
+                Decimal rating;
+
+                if (response.NumberValue != null) {
+                    rating = response.NumberValue;
+                }
+                else if (
+                    String.isNotBlank(response.ResponseValue) &&
+                    response.ResponseValue.isNumeric()
+                ) {
+                    rating = Decimal.valueOf(response.ResponseValue);
+                }
+                else {
                     continue;
                 }
-                if (!surveyRatingsMap.containsKey(resp.InvitationId)) {
-                    surveyRatingsMap.put(resp.InvitationId, new List<Decimal>());
+
+                if (!ratingsByInvitation.containsKey(response.InvitationId)) {
+                    ratingsByInvitation.put(
+                        response.InvitationId,
+                        new List<Decimal>()
+                    );
                 }
-                surveyRatingsMap.get(resp.InvitationId).add(ratingValue);
+
+                ratingsByInvitation.get(
+                    response.InvitationId
+                ).add(rating);
             }
 
-            // ---- Step 3: process each request using the pre-fetched data ----
+            /*
+            * STEP 4
+            * Calculate and update booking
+            */
+            List<Travel_Booking__c> bookingsToUpdate =
+                new List<Travel_Booking__c>();
+
+            Set<Id> packageIds = new Set<Id>();
+
             for (Integer i = 0; i < requests.size(); i++) {
+
                 Result result = results[i];
-                if (result.errorMessage != null) {
-                    continue; // already failed validation above
+
+                SurveyResponse sr =
+                    surveyResponseMap.get(
+                        (Id)requests[i].surveyResponseId
+                    );
+
+                if (sr == null) {
+                    result.errorMessage =
+                        'Survey Response not found';
+                    continue;
                 }
 
-                Id surveyId = surveyIdByIndex.get(i);
-                Id bookingId = bookingIdByIndex.get(i);
+                Travel_Booking__c booking =
+                    bookingByInvitation.get(sr.InvitationId);
 
-                try {
-                    Id invitationId = invitationIdBySurveyId.get(surveyId);
-                    if (invitationId == null) {
-                        result.errorMessage = 'Survey response not found or has no invitation: ' + surveyId;
-                        continue;
-                    }
-
-                    List<Decimal> ratings = surveyRatingsMap.get(invitationId);
-                    if (ratings == null || ratings.isEmpty()) {
-                        result.errorMessage = 'No rating responses found for survey ' + surveyId;
-                        continue;
-                    }
-
-                    Travel_Booking__c booking = bookingMap.get(bookingId);
-                    if (booking == null) {
-                        result.errorMessage = 'Booking record not found: ' + bookingId;
-                        continue;
-                    }
-
-                    Decimal sum = 0;
-                    for (Decimal rating : ratings) {
-                        sum += rating;
-                    }
-                    result.averageRating = sum.divide(ratings.size(), 2, System.RoundingMode.HALF_UP);
-
-                    booking.Average_Rating__c = result.averageRating;
-                    booking.Survey_Completed__c = true;
-                    bookingsToUpdate.add(booking);
-
-                    if (booking.Tour_Package__c != null) {
-                        packageIds.add(booking.Tour_Package__c);
-                    }
-
-                    result.success = true;
-
-                } catch (Exception e) {
-                    result.errorMessage = 'Error processing survey: ' + e.getMessage();
-                    createErrorLog(String.valueOf(surveyId), 'calculateBookingRating', e);
+                if (booking == null) {
+                    result.errorMessage =
+                        'No Travel Booking found for Invitation Id: '
+                        + sr.InvitationId;
+                    continue;
                 }
+
+                List<Decimal> ratings =
+                    ratingsByInvitation.get(sr.InvitationId);
+
+                if (ratings == null || ratings.isEmpty()) {
+                    result.errorMessage =
+                        'No ratings found';
+                    continue;
+                }
+
+                Decimal total = 0;
+
+                for (Decimal r : ratings) {
+                    total += r;
+                }
+
+                Decimal averageRating =
+                    total.divide(
+                        ratings.size(),
+                        2,
+                        System.RoundingMode.HALF_UP
+                    );
+
+                booking.Average_Rating__c = averageRating;
+                booking.Survey_Completed__c = true;
+
+                bookingsToUpdate.add(booking);
+
+                if (booking.Tour_Package__c != null) {
+                    packageIds.add(
+                        booking.Tour_Package__c
+                    );
+                }
+
+                result.success = true;
+                result.bookingId = booking.Id;
+                result.averageRating = averageRating;
             }
 
-            // ---- Step 4: bulk DML ----
             if (!bookingsToUpdate.isEmpty()) {
                 update bookingsToUpdate;
             }
@@ -213,16 +240,20 @@ public with sharing class SurveyRatingCalculator {
                 recalculatePackages(packageIds);
             }
 
-        } catch (Exception e) {
-            // Something failed outside the per-request loop (e.g. the bulk queries
-            // themselves). Attach the error to any request that hasn't already
-            // succeeded or failed, rather than discarding the whole result list.
+        }
+        catch (Exception e) {
+
             for (Result result : results) {
-                if (!result.success && result.errorMessage == null) {
-                    result.errorMessage = 'Error in calculateBookingRating: ' + e.getMessage();
+                if (!result.success) {
+                    result.errorMessage = e.getMessage();
                 }
             }
-            createErrorLog('batch', 'calculateBookingRating', e);
+
+            createErrorLog(
+                'calculateBookingRating',
+                'calculateBookingRating',
+                e
+            );
         }
 
         return results;
