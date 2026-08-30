@@ -183,11 +183,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Travel_Booking__c.Survey_Invitation__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Travel_Booking__c.Survey_Sent__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -265,7 +260,7 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>AllowSurveyAdvancedFeatures</name>
     </userPermissions>
 </PermissionSet>

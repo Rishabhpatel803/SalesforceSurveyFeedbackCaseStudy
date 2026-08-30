@@ -3,7 +3,7 @@
     <fullName>All</fullName>
     <columns>NAME</columns>
     <columns>Destination__c</columns>
-    <columns>Total_Responses__c</columns>
+    <columns>Travel_Mode__c</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
 </ListView>

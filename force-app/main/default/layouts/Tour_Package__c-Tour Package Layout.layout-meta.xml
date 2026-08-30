@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
-    <excludeButtons>OpenSlackRecordChannel</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>false</customLabel>
@@ -23,6 +22,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Total_Responses__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Travel_Mode__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -71,6 +74,17 @@
         <style>CustomLinks</style>
     </layoutSections>
     <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>Name</fields>
+        <fields>SurveySubInvitationName</fields>
+        <fields>SurveySubInvitationLink</fields>
+        <fields>SurveySubInvitationParticipant</fields>
+        <fields>SurveySubInvitationResStatus</fields>
+        <relatedList>SurveySubjectRecords</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>TASK.SUBJECT</fields>
         <fields>TASK.WHO_NAME</fields>
         <fields>ACTIVITY.TASK</fields>
@@ -99,7 +113,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hg8000007VfFl</masterLabel>
+        <masterLabel>00hIf000000rs4Y</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
