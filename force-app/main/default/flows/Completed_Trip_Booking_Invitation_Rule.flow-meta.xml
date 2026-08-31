@@ -5,7 +5,7 @@
         <label>Dynamic Send Survey Invitation</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <actionName>post_trip_feedback</actionName>
+        <actionName>exploreconnect_travels_trip_survey</actionName>
         <actionType>dynamicSendSurveyInvitation</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -50,7 +50,7 @@
                 <stringValue>{!$Record.Contact__r.Id}</stringValue>
             </value>
         </inputParameters>
-        <nameSegment>post_trip_feedback</nameSegment>
+        <nameSegment>exploreconnect_travels_trip_survey</nameSegment>
     </actionCalls>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <decisions>
